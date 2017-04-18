@@ -1,35 +1,34 @@
 package de.hs.mannheim.tpe.mvg.testate.Testat2;
 
-public class Aktie extends VermoegensGegenstand implements Handelbar {
+public class Aktie extends Vermoegensgegenstand implements Handelbar {
+
 	private long kurs;
-	private long kurs1;
-	private long kurs2;
-	private static int anzahl;
 
-	public Aktie(long kurs, String name, long kaufpreis, String kaufdatum) {
-		super(name, kaufpreis, kaufdatum);
-		anzahl++;
+	public Aktie(String name, String kaufdatum, double kaufpreis, double kurs, int anzahl) {
+		super(name, kaufdatum, kaufpreis, anzahl);
+		this.kurs = (long) (kurs * 100);
 	}
 
-	public Aktie(double kurs1, double kurs2) {
-		this.kurs1 = (long) kurs1;
-		this.kurs2 = (long) kurs2;
+	public long getKurs() {
+		return kurs;
 	}
 
-	public long getKurs1() {
-		return kurs1;
-	}
-
-	public long getKurs2() {
-		return kurs2;
-	}
-
-	public static int getAnzahl() {
-		return anzahl;
+	public double getKursAsDouble() {
+		return ((double) kurs) / 100.00;
 	}
 
 	public void setKurs(long neuerKurs) {
 		kurs = neuerKurs;
+	}
+
+	@Override
+	public String toString() {
+		// return " Aktie " + getName() + " " + getAnzahl() + " " +
+		// getKaufpreisAsDouble();
+		StringBuilder sb = new StringBuilder();
+		sb.append(
+				String.format("	Aktien			%s			%s			%s", getName(), getAnzahl(), getKaufpreisAsDouble()));
+		return sb.toString();
 	}
 
 }

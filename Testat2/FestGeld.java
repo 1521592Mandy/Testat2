@@ -1,25 +1,52 @@
 package de.hs.mannheim.tpe.mvg.testate.Testat2;
 
-public class FestGeld extends VermoegensGegenstand {
+public class Festgeld extends Vermoegensgegenstand {
 
-	private final long BETRAG;
 	private final long ZINSSATZ;
 	private long laufzeit;
-	private static long anzahl;
-	private long wert;
+	private long kurs;
 
-	public FestGeld(String name, long kaufpreis, String kaufdatum, long betrag, long zinssatz, long laufzeit,
-			long wert) {
-		super(name, kaufpreis, kaufdatum);
-		BETRAG = betrag;
-		ZINSSATZ = zinssatz;
+	public Festgeld(String name, String kaufdatum, double betrag, double zinssatz, long laufzeit, int anzahl) {
+		super(name, kaufdatum, betrag, anzahl);
+		ZINSSATZ = (long) (zinssatz * 100);
 		this.laufzeit = laufzeit;
-		this.wert = wert;
+		this.kurs = (long) (betrag * 100);
+	}
+
+	public long getZinssatz() {
+		return ZINSSATZ;
+	}
+	
+	public double getZinssatzAsDouble() {
+		return ((double) ZINSSATZ) / 100.00;
+	}
+
+	public long getLaufzeit() {
+		return laufzeit;
+	}
+
+	public long getKurs() {
+		return kurs;
+	}
+	
+	public double getKursAsDouble() {
+		return ((double) kurs) / 100.00;
+	}
+
+	public void setKurs(long neuerKurs) {
+		this.kurs = neuerKurs;
 	}
 
 	public long berehneEndwert() {
-		return (long) (BETRAG * Math.pow(((1+(ZINSSATZ/100))), laufzeit));
+		return (long) (getKaufpreis() * Math.pow(((1 + (ZINSSATZ / 100))), laufzeit));
+	}
+
+	public String toString() {
+//		return "  Festgeld" + "	" + getName() + "	" + getAnzahl() + "		" + getKaufpreisAsDouble();
+		StringBuilder sb = new StringBuilder();
+		sb.append(
+				String.format("	Festgeld		%s		%s			%s", getName(), getAnzahl(), getKaufpreisAsDouble()));
+		return sb.toString();
 	}
 
 }
-
