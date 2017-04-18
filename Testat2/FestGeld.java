@@ -1,52 +1,56 @@
 package de.hs.mannheim.tpe.mvg.testate.Testat2;
 
-public class Festgeld extends Vermoegensgegenstand {
+package de.hsmannheim.vermoegenswerte;
 
-	private final long ZINSSATZ;
-	private long laufzeit;
-	private long kurs;
+import java.util.Date;
 
-	public Festgeld(String name, String kaufdatum, double betrag, double zinssatz, long laufzeit, int anzahl) {
-		super(name, kaufdatum, betrag, anzahl);
-		ZINSSATZ = (long) (zinssatz * 100);
-		this.laufzeit = laufzeit;
-		this.kurs = (long) (betrag * 100);
-	}
+public class FestGeld extends VermoegensGegenstand
+{
 
-	public long getZinssatz() {
-		return ZINSSATZ;
-	}
-	
-	public double getZinssatzAsDouble() {
-		return ((double) ZINSSATZ) / 100.00;
-	}
+    private long zinssatz;
+    private int laufzeit_jahre;
+    private double portfolio_wert = super.round(super.getKAUFPREIS(),2);
+    private double end_betrag = Double.NaN;
 
-	public long getLaufzeit() {
-		return laufzeit;
-	}
+    public Festgeld(String name, String zeitpunkt, long kaufpreis, long zinssatz, int laufzeit_jahre)
+    {
+        super(name, zeitpunkt, kaufpreis);
+        this.zinssatz = zinssatz;
+        this.laufzeit_jahre = laufzeit_jahre;
+    }
 
-	public long getKurs() {
-		return kurs;
-	}
-	
-	public double getKursAsDouble() {
-		return ((double) kurs) / 100.00;
-	}
+    public double getEnd_betrag()
+    {
+        if (this.end_betrag != Double.NaN)
+        {
+            calculateEndbetrag();
+            return this.end_betrag;
+        } else
+            return this.end_betrag;
+    }
 
-	public void setKurs(long neuerKurs) {
-		this.kurs = neuerKurs;
-	}
+    private void calculateEndbetrag()
+    {
+        setEnd_betrag(Math.pow
+                (super.getKAUFPREIS() * (1 + (zinssatz / 100)), laufzeit_jahre));
+    }
 
-	public long berehneEndwert() {
-		return (long) (getKaufpreis() * Math.pow(((1 + (ZINSSATZ / 100))), laufzeit));
-	}
 
-	public String toString() {
-//		return "  Festgeld" + "	" + getName() + "	" + getAnzahl() + "		" + getKaufpreisAsDouble();
-		StringBuilder sb = new StringBuilder();
-		sb.append(
-				String.format("	Festgeld		%s		%s			%s", getName(), getAnzahl(), getKaufpreisAsDouble()));
-		return sb.toString();
-	}
+    @Override
+    public double toEuro()
+    {
+        return super.round(getEnd_betrag(), 2);
+    }
 
+
+
+    public void setEnd_betrag(double end_betrag)
+    {
+        this.end_betrag = end_betrag;
+    }
+
+    public double getPortfolio_wert()
+    {
+        return this.portfolio_wert;
+    }
 }

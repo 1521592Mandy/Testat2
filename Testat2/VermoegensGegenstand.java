@@ -1,43 +1,44 @@
 package de.hs.mannheim.tpe.mvg.testate.Testat2;
 
-public abstract class Vermoegensgegenstand {
-	private final String NAME;
-	private final long KAUFPREIS;
-	private final String KAUFDATUM;
-	private int anzahl;
+public class VermoegensGegenstand
+{
+    private final String NAME;
+    private final String KAUFDATUM;
+    private final long KAUFPREIS;
 
-	public Vermoegensgegenstand(String name, String kaufdatum, double kaufpreis, int anzahl) {
-		this.NAME = name;
-		this.KAUFDATUM = kaufdatum;
-		this.KAUFPREIS = (long) (kaufpreis * 100);
-		this.anzahl = anzahl;
-	}
+    public Vermoegensgegenstand(String NAME, String KAUFDATUM, long KAUFPREIS)
+    {
+        this.NAME = NAME;
+        this.KAUFDATUM = KAUFDATUM;
+        this.KAUFPREIS = KAUFPREIS;
+    }
 
-	public String getName() {
-		return NAME;
-	}
+    public double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
 
-	public String getKaufdatum() {
-		return KAUFDATUM;
-	}
-	
-	public long getKaufpreis() {
-		return KAUFPREIS;
-	}
-	
-	public double getKaufpreisAsDouble() {
-		return ((double) KAUFPREIS) / 100.00;
-	}
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
+    }
 
-	public int getAnzahl() {
-		return anzahl;
-	}
+    public double toEuro()
+    {
+        return  round(getKAUFPREIS(), 2);
+    }
 
-	public void setAnzahl(int anzahl) {
-		this.anzahl = anzahl;
-	}
+    public String getNAME()
+    {
+        return NAME;
+    }
 
-	@Override
-	public abstract String toString();
+    public String getKAUFDATUM()
+    {
+        return KAUFDATUM;
+    }
 
+    public long getKAUFPREIS()
+    {
+        return KAUFPREIS;
+    }
 }

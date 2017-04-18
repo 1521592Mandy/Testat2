@@ -1,33 +1,27 @@
 package de.hs.mannheim.tpe.mvg.testate.Testat2;
 
-public class Immobilie extends Vermoegensgegenstand {
+public class Immobilie extends Vermoegensgegenstand
+{
+    private int abschreibungsdauer;
+    private short wert_post_Abschreibungsdauer;
 
-	private long lebensdauer;
-	private long kurs;
+    public Immobilie(String name, Date zeitpunkt, long kaufpreis, int abschreibungsdauer)
+    {
+        super(name, zeitpunkt, kaufpreis);
+        this.abschreibungsdauer = abschreibungsdauer;
+    }
 
-	public Immobilie(String name, String kaufdatum, double kaufpreis, long lebensdauer, double kurs) {
-		super(name, kaufdatum, kaufpreis, 1);
-		this.lebensdauer = lebensdauer;
-		this.kurs = (long) (kurs * 100);
-	}
-
-	public long getLebensdauer() {
-		return lebensdauer;
-	}
-
-	public long getKurs() {
-		return kurs;
-	}
-	
-	public double getKursAsDouble() {
-		return ((double) kurs) / 100.00;
-	}
-
-	public String toString() {
-//		return "  Immobillie	" + getName() + "		" + getAnzahl() + "		" + getKaufpreisAsDouble();
-		StringBuilder sb = new StringBuilder();
-		sb.append(
-				String.format("	Immobillie		%s			%s			%s", getName(), getAnzahl(), getKaufpreisAsDouble()));
-		return sb.toString();
-	}
+    double linearer_Wertverlust()
+    {
+        double temp_Value = getKAUFPREIS();
+        double kaufpreis_X = getKAUFPREIS() / abschreibungsdauer;
+        for (int i = 1; i <= abschreibungsdauer; i++)
+        {
+            if (temp_Value != 0)
+                temp_Value -= kaufpreis_X;
+            else
+                this.wert_post_Abschreibungsdauer = 0;
+        }
+        return this.wert_post_Abschreibungsdauer;
+    }
 }

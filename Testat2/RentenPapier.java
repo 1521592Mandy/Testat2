@@ -1,32 +1,24 @@
 package de.hs.mannheim.tpe.mvg.testate.Testat2;
 
-public class Rentenpapier extends Festgeld implements Handelbar {
+public class RentenPapier extends FestGeld
+{
+    private double kurs;
 
-	private long kurs;
+    public Rentenpapier(String name, Date zeitpunkt, long kaufpreis, double betrag,
+                        double zinssatz, int laufzeit_jahre, double portfolio_wert, double end_betrag, double kurs)
+    {
+        super(name, zeitpunkt, kaufpreis, betrag, zinssatz, laufzeit_jahre, portfolio_wert, end_betrag);
+        this.kurs = kurs;
+    }
 
-	public Rentenpapier(String name, String kaufdatum, double kaufpreis, double zinssatz, long laufzeit, int anzahl) {
-		super(name, kaufdatum, kaufpreis, zinssatz, laufzeit, anzahl);
-		this.kurs = (long) (kaufpreis * 100);
-		anzahl++;
-	}
+    public double getKurs()
+    {
+        return kurs;
+    }
 
-	public long getKurs() {
-		return kurs;
-	}
-
-	public double getKursAsDouble() {
-		return ((double) kurs) / 100.00;
-	}
-
-	public void setKurs(long neuerKurs) {
-		kurs = neuerKurs;
-	}
-
-	// TO-STRING!!!
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(String.format("	Schatzbrief			%s			%s			%s", getName(), getAnzahl(),
-				getKaufpreisAsDouble()));
-		return sb.toString();
-	}
+    public void setKurs(double kurs)
+    {
+        this.kurs = kurs;
+    }
 }
+
